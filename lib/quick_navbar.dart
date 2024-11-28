@@ -17,6 +17,18 @@ class QuickNavBar extends StatefulWidget {
     this.selectedColor = Colors.blue,
   });
 
+  /* items parameter
+    format:
+      [
+        {
+          "label": "Home", // required
+          "icon": Icons.home, // required
+          "selectedIcon: Icons.home_filled", // optional, defaults to icon
+          "widget": HomePage(), // required
+        },
+      ]
+  */
+
   @override
   _QuickNavBarState createState() => _QuickNavBarState();
 }
