@@ -59,7 +59,9 @@ class _QuickNavBarState extends State<QuickNavBar> {
           );
         }).toList(),
         selectedItemColor: widget.selectedColor,
-        type: widget.type ?? (Platform.isIOS || Platform.isMacOS || kIsWeb ? BottomNavigationBarType.fixed : BottomNavigationBarType.shifting),
+        type: widget.type ?? (Platform.isIOS || Platform.isMacOS || kIsWeb
+          ? BottomNavigationBarType.fixed
+          : BottomNavigationBarType.shifting),
       ),
     );
   }
