@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class QuickNavBar extends StatefulWidget {
   final List items;
   final Color selectedColor;
-  final dynamic type;
+  final BottomNavigationBarType? type;
 
   const QuickNavBar({
     super.key,
@@ -23,7 +23,7 @@ class QuickNavBar extends StatefulWidget {
         {
           "label": "Home", // required
           "icon": Icons.home, // required
-          "selectedIcon: Icons.home_filled", // optional, defaults to icon
+          "selectedIcon": Icons.home_filled, // optional, defaults to icon
           "widget": HomePage(), // required
         },
       ]
@@ -59,7 +59,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
           );
         }).toList(),
         selectedItemColor: widget.selectedColor,
-        type: widget.type ?? Platform.isIOS || Platform.isMacOS || kIsWeb ? BottomNavigationBarType.fixed : BottomNavigationBarType.shifting,
+        type: widget.type ?? (Platform.isIOS || Platform.isMacOS || kIsWeb ? BottomNavigationBarType.fixed : BottomNavigationBarType.shifting),
       ),
     );
   }
