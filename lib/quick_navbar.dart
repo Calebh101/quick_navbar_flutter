@@ -1,14 +1,19 @@
 library quick_navbar;
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class QuickNavBar extends StatefulWidget {
   final List items;
   final Color selectedColor;
+  final dynamic type;
 
   const QuickNavBar({
     super.key,
     required this.items,
+    this.type,
     this.selectedColor = Colors.blue,
   });
 
@@ -42,6 +47,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
           );
         }).toList(),
         selectedItemColor: widget.selectedColor,
+        type: widget.type ?? Platform.isIOS || Platform.isMacOS || kIsWeb ? BottomNavigationBarType.fixed : BottomNavigationBarType.shifting,
       ),
     );
   }
