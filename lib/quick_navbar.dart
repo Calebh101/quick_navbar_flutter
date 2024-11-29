@@ -116,11 +116,11 @@ class QuickNavbarType {
   final QuickNavBarType type;
 
   /// animates the navbar with material design
-  QuickNavbarType.typeOne() : type = QuickNavBarType.animate;
+  QuickNavbarType.animate() : type = QuickNavBarType.animate;
 
   /// doesn't animate the navbar with material design
-  QuickNavbarType.typeTwo() : type = QuickNavBarType.static;
+  QuickNavbarType.static() : type = QuickNavBarType.static;
 
   /// decides to animate or not animate the navbar with material design by platform
-  QuickNavbarType.typeThree() : type = QuickNavBarType.auto;
+  QuickNavbarType.auto() : type = QuickNavBarType.auto;
 }

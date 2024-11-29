@@ -1,6 +1,6 @@
 name: quick_navbar
-description: "quick_navbar is a package to allow you to create quick and stylish bottom navigation bars for your flutter apps."
-version: 0.0.5
+description: "quick_navbar is a quick, easy-to-use package to allow you to create simple but stylish bottom navigation bars."
+version: 1.0.0
 repository: https://github.com/Calebh101/quick_navbar_flutter
 
 environment:

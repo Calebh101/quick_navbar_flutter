@@ -2,7 +2,7 @@
 
 ## What is this?
 
-quick_navbar is a quick, easy-to-use package to allow you to create quick bottom navigation bars. It also includes some extra features, including an iOS-style static navigation bar, which turns off all Material Design animations, like the splash, and super-easy formats to streamline the first stages of your app.
+quick_navbar is a quick, easy-to-use package to allow you to create simple but stylish bottom navigation bars. It also includes some extra features, including an iOS-style static navigation bar, which turns off all Material Design animations, like the splash, and super-easy formats to streamline the first stages of your app.
 
 # Usage
 
