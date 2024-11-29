@@ -1,14 +1,14 @@
 # Release
 
-## 1.0
-
 ### 1.0.0 - 11/28/24
 
 - Initial public release
 
-# Beta
+### 1.0.1 - 11/28/24
 
-## 0.0
+- Improved documentation
+
+# Beta
 
 ### 0.0.0 - 11/28/24
 

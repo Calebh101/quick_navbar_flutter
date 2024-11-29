@@ -18,34 +18,24 @@ class MyApp extends StatelessWidget {
       ),
       home: QuickNavBar(items: [
         {
-          "label": "Home", // optional
-          "icon": Icons.home_outlined, // required
-          "selectedIcon": Icons.home, // optional
-          "widget": HomePage(), // required
+          "label": "Home",
+          "icon": Icons.home_outlined,
+          "selectedIcon": Icons.home,
+          "widget": HomePage(),
         },
         {
-          "label": "Search", // optional
-          "icon": Icons.search_outlined, // required
-          "selectedIcon": Icons.search, // optional
-          "widget": SettingsPage(), // required
+          "label": "Search",
+          "icon": Icons.search_outlined,
+          "selectedIcon": Icons.search,
+          "widget": SettingsPage(),
         },
         {
-          "label": "Settings", // optional
-          "icon": Icons.settings_outlined, // required
-          "selectedIcon": Icons.settings, // optional
-          "widget": SettingsPage(), // required
+          "label": "Settings",
+          "icon": Icons.settings_outlined,
+          "selectedIcon": Icons.settings,
+          "widget": SettingsPage(),
         },
       ], showLabels: false, type: QuickNavBarType.animate, hoverEffect: false),
-      // items - required - a list of items containing at least an icon and a widget, and optional label and selectedIcon
-      // showLabels - required - shows or hides the labels (setting the labels to blank or removing them altogether leaves space, so this will hide them and remove the extra space) - needs to be true if any labels are removed - default is true
-      /* type - optional - default is auto
-        the type determines what style the navbar will use
-        type can be set to these three things:
-          - QuickNavBarType.animate - all Material Design animations enabled
-          - QuickNavBarType.static - all Material Design animations disabled, making it like an iOS tab style
-          - QuickNavBarType.auto: will use static if the platform is on an Apple device, otherwise use animate
-      */
-      // hoverEffect - optional - set to true if you want a small circle to show up when hovered on (and/or pressed), false if not - default is false
     );
   }
 }
