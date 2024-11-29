@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 /// the actual widget that loads the navbar and inputted pages
 class QuickNavBar extends StatefulWidget {
   final List items;
-  final Color selectedColor;
+  final Color? color;
+  final Color? selectedColor;
   final QuickNavBarType? type;
   final double fontSize;
   final double? selectedFontSize;
@@ -16,11 +17,12 @@ class QuickNavBar extends StatefulWidget {
   const QuickNavBar({
     super.key,
     required this.items,
-    required this.showLabels,
+    this.showLabels = true,
     this.type,
     this.fontSize = 12.0,
     this.selectedFontSize,
-    this.selectedColor = Colors.blue,
+    this.color,
+    this.selectedColor,
     this.hoverEffect = false,
   });
 
@@ -59,7 +61,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           items: widget.items.map((tab) {
-            return tab.containsKey("label")
+            return tab.containsKey("label") || widget.showLabels == false
                 ? BottomNavigationBarItem(
                     icon: Icon(tab['icon']),
                     activeIcon: Icon(tab.containsKey('selectedIcon')
@@ -72,10 +74,11 @@ class _QuickNavBarState extends State<QuickNavBar> {
                     activeIcon: Icon(tab.containsKey('selectedIcon')
                         ? tab["selectedIcon"]
                         : tab["icon"]),
-                    label: '',
+                    label: null,
                   );
           }).toList(),
           selectedItemColor: widget.selectedColor,
+          unselectedItemColor: widget.color,
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: TextStyle(
               fontSize: _getBottomNavBarType() == QuickNavBarType.static
