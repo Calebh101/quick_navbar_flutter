@@ -1,3 +1,5 @@
+# Current Status: Release
+
 ### 0.0.0 - 11/28/24
 
 - Initial beta release
@@ -45,3 +47,8 @@
 ### 1.0.3 - 11/28/24
 
 - Improved documentation
+
+### 1.0.4 - 11/29/24
+
+- Changed default selected color to the application accent color
+- Fixed theme overwrite bug

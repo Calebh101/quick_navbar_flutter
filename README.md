@@ -86,12 +86,12 @@ QuickNavBar(
 - **Required**: no
 - **Type**: Material Color
 - **Default**: default (decided by Flutter)
-- **Description**: This decides the default theme color of the navbar items' text.
+- **Description**: This decides the default theme color of the navbar items' text and icons.
 
 ### selectedColor
 - **Required**: no
 - **Type**: Material Color
-- **Default**: default (decided by Flutter)
+- **Default**: accent color of application
 - **Description**: This is the theme color of the navbar item that is currently selected.
 
 ### hoverEffect

@@ -47,12 +47,12 @@ class _QuickNavBarState extends State<QuickNavBar> {
       ),
       bottomNavigationBar: Theme(
         data: _getBottomNavBarType() == QuickNavBarType.static
-            ? ThemeData(
+            ? Theme.of(context).copyWith(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 hoverColor: widget.hoverEffect ? null : Colors.transparent,
               )
-            : ThemeData(
+            : Theme.of(context).copyWith(
                 hoverColor: widget.hoverEffect ? null : Colors.transparent,
               ),
         child: BottomNavigationBar(
@@ -77,7 +77,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
                     label: null,
                   );
           }).toList(),
-          selectedItemColor: widget.selectedColor,
+          selectedItemColor: widget.selectedColor ?? Theme.of(context).colorScheme.secondary,
           unselectedItemColor: widget.color,
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: TextStyle(
