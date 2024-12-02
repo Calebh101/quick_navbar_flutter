@@ -14,9 +14,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.system,
       home: QuickNavBar(items: [
         {
           "label": "Home",
@@ -35,7 +40,7 @@ class MyApp extends StatelessWidget {
           "selectedIcon": Icons.settings,
           "widget": SettingsPage(),
         },
-      ]),
+      ], sidebarBeta: true),
     );
   }
 }

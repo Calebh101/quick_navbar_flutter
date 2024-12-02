@@ -59,56 +59,40 @@ class _QuickNavBarState extends State<QuickNavBar> {
     return Scaffold(
       body: Center(
         child: sidebar
-            ? Theme(
-                data: _getBottomNavBarType() == QuickNavBarType.static
-                    ? Theme.of(context).copyWith(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        hoverColor:
-                            widget.hoverEffect ? null : Colors.transparent,
-                      )
-                    : Theme.of(context).copyWith(
-                        hoverColor:
-                            widget.hoverEffect ? null : Colors.transparent,
-                      ),
-                child: Row(
-                  children: [
-                    Material(
-                      child: NavigationRail(
-                        selectedIndex: _selectedIndex,
-                        onDestinationSelected: _onItemTapped,
-                        labelType: widget.showLabels
-                            ? NavigationRailLabelType.all
-                            : NavigationRailLabelType.none,
-                        destinations: widget.items.map((tab) {
-                          return NavigationRailDestination(
-                            icon: Icon(tab['icon']),
-                            selectedIcon: Icon(tab.containsKey('selectedIcon')
-                                ? tab["selectedIcon"]
-                                : tab["icon"]),
-                            label: tab.containsKey("label") ||
-                                    widget.showLabels == false
-                                ? Text(tab['label'] ?? "")
-                                : SizedBox.shrink(),
-                          );
-                        }).toList(),
-                        selectedIconTheme: IconThemeData(
-                          color: widget.selectedColor ??
-                              Theme.of(context).colorScheme.secondary,
-                        ),
-                        unselectedIconTheme: IconThemeData(color: widget.color),
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: widget.items[_selectedIndex]["widget"],
-                      ),
-                    ),
-                  ],
+            ? Row(
+              children: [
+                NavigationRail(
+                  selectedIndex: _selectedIndex,
+                  onDestinationSelected: _onItemTapped,
+                  labelType: widget.showLabels
+                      ? NavigationRailLabelType.all
+                      : NavigationRailLabelType.none,
+                  destinations: widget.items.map((tab) {
+                    return NavigationRailDestination(
+                      icon: Icon(tab['icon']),
+                      selectedIcon: Icon(tab.containsKey('selectedIcon')
+                          ? tab["selectedIcon"]
+                          : tab["icon"]),
+                      label: tab.containsKey("label") ||
+                              widget.showLabels == false
+                          ? Text(tab['label'] ?? "")
+                          : SizedBox.shrink(),
+                    );
+                  }).toList(),
+                  selectedIconTheme: IconThemeData(
+                    color: widget.selectedColor ??
+                        Theme.of(context).colorScheme.secondary,
+                  ),
+                  unselectedIconTheme: IconThemeData(color: widget.color ?? Theme.of(context).colorScheme.secondary),
                 ),
-              )
-            : widget.items[_selectedIndex]["widget"],
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: widget.items[_selectedIndex]["widget"],
+                  ),
+                ),
+              ],
+            ) : widget.items[_selectedIndex]["widget"],
       ),
       bottomNavigationBar: sidebar
           ? null
