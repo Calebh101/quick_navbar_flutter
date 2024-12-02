@@ -103,5 +103,6 @@ QuickNavBar(
 ### sidebar
 - **Required**: no
 - **Type**: boolean
-- **Default**: false
-- **Description**: The sidebar is a feature to show a side navbar instead of a bottom navbar for larger screens. True shows the sidebar, false hides, and leaving it blank makes it **false, because this feature is in beta.** ~~based on if the screen width is larger than the screen height.~~
+- **Default**: auto
+- **Description**: The sidebar is a feature to show a side navbar instead of a bottom navbar for larger screens. True shows the sidebar, false hides, and leaving it blank makes it based on if the screen width is larger than the screen height.
+- **Notice**: To use this feature, please set the optional sidebarBeta parameter to true. Otherwise, this feature will not be usable unless you set sidebarBeta to true, or you explicitly set sidebar to true.

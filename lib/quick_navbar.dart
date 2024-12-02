@@ -14,6 +14,7 @@ class QuickNavBar extends StatefulWidget {
   final bool hoverEffect;
   final bool showLabels;
   final bool? sidebar;
+  final bool sidebarBeta;
 
   const QuickNavBar({
     super.key,
@@ -26,6 +27,7 @@ class QuickNavBar extends StatefulWidget {
     this.color,
     this.selectedColor,
     this.hoverEffect = false,
+    this.sidebarBeta = false,
   });
 
   @override
@@ -34,7 +36,6 @@ class QuickNavBar extends StatefulWidget {
 
 class _QuickNavBarState extends State<QuickNavBar> {
   int _selectedIndex = 0;
-  bool disableAutoSidebar = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,7 +44,12 @@ class _QuickNavBarState extends State<QuickNavBar> {
   }
 
   bool allowSidebar() {
-    return widget.sidebar ?? (disableAutoSidebar ? false : (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height));
+    bool disableAutoSidebar = !widget.sidebarBeta || widget.sidebar == true;
+    return widget.sidebar ??
+        (disableAutoSidebar
+            ? false
+            : (MediaQuery.of(context).size.width >
+                MediaQuery.of(context).size.height));
   }
 
   @override
@@ -52,92 +58,105 @@ class _QuickNavBarState extends State<QuickNavBar> {
 
     return Scaffold(
       body: Center(
-        child: sidebar ? Theme(
-          data: _getBottomNavBarType() == QuickNavBarType.static
-              ? Theme.of(context).copyWith(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: widget.hoverEffect ? null : Colors.transparent,
+        child: sidebar
+            ? Theme(
+                data: _getBottomNavBarType() == QuickNavBarType.static
+                    ? Theme.of(context).copyWith(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor:
+                            widget.hoverEffect ? null : Colors.transparent,
+                      )
+                    : Theme.of(context).copyWith(
+                        hoverColor:
+                            widget.hoverEffect ? null : Colors.transparent,
+                      ),
+                child: Row(
+                  children: [
+                    Material(
+                      child: NavigationRail(
+                        selectedIndex: _selectedIndex,
+                        onDestinationSelected: _onItemTapped,
+                        labelType: widget.showLabels
+                            ? NavigationRailLabelType.all
+                            : NavigationRailLabelType.none,
+                        destinations: widget.items.map((tab) {
+                          return NavigationRailDestination(
+                            icon: Icon(tab['icon']),
+                            selectedIcon: Icon(tab.containsKey('selectedIcon')
+                                ? tab["selectedIcon"]
+                                : tab["icon"]),
+                            label: tab.containsKey("label") ||
+                                    widget.showLabels == false
+                                ? Text(tab['label'] ?? "")
+                                : SizedBox.shrink(),
+                          );
+                        }).toList(),
+                        selectedIconTheme: IconThemeData(
+                          color: widget.selectedColor ??
+                              Theme.of(context).colorScheme.secondary,
+                        ),
+                        unselectedIconTheme: IconThemeData(color: widget.color),
+                      ),
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: widget.items[_selectedIndex]["widget"],
+                      ),
+                    ),
+                  ],
+                ),
               )
-              : Theme.of(context).copyWith(
-                  hoverColor: widget.hoverEffect ? null : Colors.transparent,
-              ),
-          child: Row(
-            children: [
-              NavigationRail(
-                selectedIndex: _selectedIndex,
-                onDestinationSelected: _onItemTapped,
-                labelType: widget.showLabels
-                  ? NavigationRailLabelType.all
-                  : NavigationRailLabelType.none,
-                destinations: widget.items.map((tab) {
-                  return NavigationRailDestination(
-                    icon: Icon(tab['icon']),
-                    selectedIcon: Icon(tab.containsKey('selectedIcon')
-                        ? tab["selectedIcon"]
-                        : tab["icon"]),
-                    label: tab.containsKey("label") || widget.showLabels == false
-                        ? Text(tab['label'] ?? "")
-                        : SizedBox.shrink(),
-                  );
+            : widget.items[_selectedIndex]["widget"],
+      ),
+      bottomNavigationBar: sidebar
+          ? null
+          : Theme(
+              data: _getBottomNavBarType() == QuickNavBarType.static
+                  ? Theme.of(context).copyWith(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor:
+                          widget.hoverEffect ? null : Colors.transparent,
+                    )
+                  : Theme.of(context).copyWith(
+                      hoverColor:
+                          widget.hoverEffect ? null : Colors.transparent,
+                    ),
+              child: BottomNavigationBar(
+                showSelectedLabels: widget.showLabels,
+                showUnselectedLabels: widget.showLabels,
+                currentIndex: _selectedIndex,
+                onTap: _onItemTapped,
+                items: widget.items.map((tab) {
+                  return tab.containsKey("label") || widget.showLabels == false
+                      ? BottomNavigationBarItem(
+                          icon: Icon(tab['icon']),
+                          activeIcon: Icon(tab.containsKey('selectedIcon')
+                              ? tab["selectedIcon"]
+                              : tab["icon"]),
+                          label: tab['label'],
+                        )
+                      : BottomNavigationBarItem(
+                          icon: Icon(tab['icon']),
+                          activeIcon: Icon(tab.containsKey('selectedIcon')
+                              ? tab["selectedIcon"]
+                              : tab["icon"]),
+                          label: null,
+                        );
                 }).toList(),
-                selectedIconTheme: IconThemeData(
-                  color: widget.selectedColor ?? Theme.of(context).colorScheme.secondary,
-                ),
-                unselectedIconTheme: IconThemeData(color: widget.color),
+                selectedItemColor: widget.selectedColor ??
+                    Theme.of(context).colorScheme.secondary,
+                unselectedItemColor: widget.color,
+                type: BottomNavigationBarType.fixed,
+                selectedLabelStyle: TextStyle(
+                    fontSize: _getBottomNavBarType() == QuickNavBarType.static
+                        ? widget.fontSize
+                        : (widget.selectedFontSize ?? widget.fontSize * 1.25)),
+                unselectedLabelStyle: TextStyle(fontSize: widget.fontSize),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: widget.items[_selectedIndex]["widget"],
-                ),
-              ),
-            ],
-          ),
-        ) : widget.items[_selectedIndex]["widget"],
-      ),
-      bottomNavigationBar: sidebar ? null : Theme(
-        data: _getBottomNavBarType() == QuickNavBarType.static
-            ? Theme.of(context).copyWith(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: widget.hoverEffect ? null : Colors.transparent,
-              )
-            : Theme.of(context).copyWith(
-                hoverColor: widget.hoverEffect ? null : Colors.transparent,
-              ),
-        child: BottomNavigationBar(
-          showSelectedLabels: widget.showLabels,
-          showUnselectedLabels: widget.showLabels,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: widget.items.map((tab) {
-            return tab.containsKey("label") || widget.showLabels == false
-                ? BottomNavigationBarItem(
-                    icon: Icon(tab['icon']),
-                    activeIcon: Icon(tab.containsKey('selectedIcon')
-                        ? tab["selectedIcon"]
-                        : tab["icon"]),
-                    label: tab['label'],
-                  )
-                : BottomNavigationBarItem(
-                    icon: Icon(tab['icon']),
-                    activeIcon: Icon(tab.containsKey('selectedIcon')
-                        ? tab["selectedIcon"]
-                        : tab["icon"]),
-                    label: null,
-                  );
-          }).toList(),
-          selectedItemColor: widget.selectedColor ?? Theme.of(context).colorScheme.secondary,
-          unselectedItemColor: widget.color,
-          type: BottomNavigationBarType.fixed,
-          selectedLabelStyle: TextStyle(
-              fontSize: _getBottomNavBarType() == QuickNavBarType.static
-                  ? widget.fontSize
-                  : (widget.selectedFontSize ?? widget.fontSize * 1.25)),
-          unselectedLabelStyle: TextStyle(fontSize: widget.fontSize),
-        ),
-      ),
+            ),
     );
   }
 

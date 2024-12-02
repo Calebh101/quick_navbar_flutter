@@ -53,7 +53,13 @@
 - Changed default selected color to the application accent color
 - Fixed theme overwrite bug
 
-## 1.1.0 - 12/1/24
+### 1.1.0 - 12/1/24
 
 - New beta feature: sidebar
   - The sidebar feature is a new beta feature allowing the bottom navbar to become a side navbar for larger screens. This is false by default, until it becomes a released feature.
+
+### 1.1.1 - 12/1/24
+
+- Now new parameter: sidebarBeta: set to true to use the sidebar (which can be true, false, or auto); default is false
+- Known issue: sidebar mode does not respect chosen QuickNavBarType and hoverEffect
+- Improved documentation

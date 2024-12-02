@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           "selectedIcon": Icons.settings,
           "widget": SettingsPage(),
         },
-      ], showLabels: true, type: QuickNavBarType.static),
+      ]),
     );
   }
 }
