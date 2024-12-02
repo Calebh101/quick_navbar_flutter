@@ -52,3 +52,8 @@
 
 - Changed default selected color to the application accent color
 - Fixed theme overwrite bug
+
+## 1.1.0 - 12/1/24
+
+- New beta feature: sidebar
+  - The sidebar feature is a new beta feature allowing the bottom navbar to become a side navbar for larger screens. This is false by default, until it becomes a released feature.

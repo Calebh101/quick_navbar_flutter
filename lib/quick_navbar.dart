@@ -13,11 +13,13 @@ class QuickNavBar extends StatefulWidget {
   final double? selectedFontSize;
   final bool hoverEffect;
   final bool showLabels;
+  final bool? sidebar;
 
   const QuickNavBar({
     super.key,
     required this.items,
     this.showLabels = true,
+    this.sidebar,
     this.type,
     this.fontSize = 12.0,
     this.selectedFontSize,
@@ -32,6 +34,7 @@ class QuickNavBar extends StatefulWidget {
 
 class _QuickNavBarState extends State<QuickNavBar> {
   int _selectedIndex = 0;
+  bool disableAutoSidebar = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -39,13 +42,61 @@ class _QuickNavBarState extends State<QuickNavBar> {
     });
   }
 
+  bool allowSidebar() {
+    return widget.sidebar ?? (disableAutoSidebar ? false : (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height));
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool sidebar = allowSidebar();
+
     return Scaffold(
       body: Center(
-        child: widget.items[_selectedIndex]["widget"],
+        child: sidebar ? Theme(
+          data: _getBottomNavBarType() == QuickNavBarType.static
+              ? Theme.of(context).copyWith(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: widget.hoverEffect ? null : Colors.transparent,
+              )
+              : Theme.of(context).copyWith(
+                  hoverColor: widget.hoverEffect ? null : Colors.transparent,
+              ),
+          child: Row(
+            children: [
+              NavigationRail(
+                selectedIndex: _selectedIndex,
+                onDestinationSelected: _onItemTapped,
+                labelType: widget.showLabels
+                  ? NavigationRailLabelType.all
+                  : NavigationRailLabelType.none,
+                destinations: widget.items.map((tab) {
+                  return NavigationRailDestination(
+                    icon: Icon(tab['icon']),
+                    selectedIcon: Icon(tab.containsKey('selectedIcon')
+                        ? tab["selectedIcon"]
+                        : tab["icon"]),
+                    label: tab.containsKey("label") || widget.showLabels == false
+                        ? Text(tab['label'] ?? "")
+                        : SizedBox.shrink(),
+                  );
+                }).toList(),
+                selectedIconTheme: IconThemeData(
+                  color: widget.selectedColor ?? Theme.of(context).colorScheme.secondary,
+                ),
+                unselectedIconTheme: IconThemeData(color: widget.color),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: widget.items[_selectedIndex]["widget"],
+                ),
+              ),
+            ],
+          ),
+        ) : widget.items[_selectedIndex]["widget"],
       ),
-      bottomNavigationBar: Theme(
+      bottomNavigationBar: sidebar ? null : Theme(
         data: _getBottomNavBarType() == QuickNavBarType.static
             ? Theme.of(context).copyWith(
                 splashColor: Colors.transparent,

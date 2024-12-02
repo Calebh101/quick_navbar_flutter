@@ -59,7 +59,7 @@ QuickNavBar(
 - **Required**: no
 - **Type**: boolean
 - **Default**: true
-- **Description**: This will show or hide the labels to your navbar. If this is true, then your labels will show up, and if you didn't put labels in the item, then they still take up space. If this is false, then your labels will not show, and they will not take up space.
+- **Description**: This will show or hide the labels to your navbar. If this is true, then your labels will show up, and even if you didn't put labels in the item, they will still take up space. If this is false, then your labels will not show, and they will not take up space.
 
 ### type
 - **Required**: no
@@ -99,3 +99,9 @@ QuickNavBar(
 - **Type**: boolean
 - **Default**: false
 - **Description**: Decides if there should be a small bubble around the icons. This is a default in the BottomNavBar Flutter widget, but I have overwritten this to default to not show. However, it will show if this is true.
+
+### sidebar
+- **Required**: no
+- **Type**: boolean
+- **Default**: false
+- **Description**: The sidebar is a feature to show a side navbar instead of a bottom navbar for larger screens. True shows the sidebar, false hides, and leaving it blank makes it **false, because this feature is in beta.** ~~based on if the screen width is larger than the screen height.~~

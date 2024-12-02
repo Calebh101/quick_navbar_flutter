@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -25,9 +26,8 @@ class MyApp extends StatelessWidget {
         },
         {
           "label": "Search",
-          "icon": Icons.search_outlined,
-          "selectedIcon": Icons.search,
-          "widget": SettingsPage(),
+          "icon": Icons.search,
+          "widget": SearchPage(),
         },
         {
           "label": "Settings",
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           "selectedIcon": Icons.settings,
           "widget": SettingsPage(),
         },
-      ], showLabels: false, type: QuickNavBarType.animate, hoverEffect: false),
+      ], showLabels: true, type: QuickNavBarType.static),
     );
   }
 }
