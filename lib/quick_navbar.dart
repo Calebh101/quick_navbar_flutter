@@ -27,6 +27,8 @@ class QuickNavBar extends StatefulWidget {
     this.color,
     this.selectedColor,
     this.hoverEffect = false,
+
+    //@Deprecated("sidebar mode has exited beta, so sidebarBeta is no longer necessary to use sidebar mode.")
     this.sidebarBeta = false,
   });
 
@@ -44,7 +46,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
   }
 
   bool allowSidebar() {
-    bool disableAutoSidebar = !widget.sidebarBeta || widget.sidebar == true;
+    bool disableAutoSidebar = !widget.sidebarBeta && widget.sidebar != true;
     return widget.sidebar ??
         (disableAutoSidebar
             ? false
@@ -60,39 +62,42 @@ class _QuickNavBarState extends State<QuickNavBar> {
       body: Center(
         child: sidebar
             ? Row(
-              children: [
-                NavigationRail(
-                  selectedIndex: _selectedIndex,
-                  onDestinationSelected: _onItemTapped,
-                  labelType: widget.showLabels
-                      ? NavigationRailLabelType.all
-                      : NavigationRailLabelType.none,
-                  destinations: widget.items.map((tab) {
-                    return NavigationRailDestination(
-                      icon: Icon(tab['icon']),
-                      selectedIcon: Icon(tab.containsKey('selectedIcon')
-                          ? tab["selectedIcon"]
-                          : tab["icon"]),
-                      label: tab.containsKey("label") ||
-                              widget.showLabels == false
-                          ? Text(tab['label'] ?? "")
-                          : SizedBox.shrink(),
-                    );
-                  }).toList(),
-                  selectedIconTheme: IconThemeData(
-                    color: widget.selectedColor ??
-                        Theme.of(context).colorScheme.secondary,
+                children: [
+                  NavigationRail(
+                    selectedIndex: _selectedIndex,
+                    onDestinationSelected: _onItemTapped,
+                    labelType: widget.showLabels
+                        ? NavigationRailLabelType.all
+                        : NavigationRailLabelType.none,
+                    destinations: widget.items.map((tab) {
+                      return NavigationRailDestination(
+                        icon: Icon(tab['icon']),
+                        selectedIcon: Icon(tab.containsKey('selectedIcon')
+                            ? tab["selectedIcon"]
+                            : tab["icon"]),
+                        label: tab.containsKey("label") ||
+                                widget.showLabels == false
+                            ? Text(tab['label'] ?? "")
+                            : SizedBox.shrink(),
+                      );
+                    }).toList(),
+                    selectedIconTheme: IconThemeData(
+                      color: widget.selectedColor ??
+                          Theme.of(context).colorScheme.secondary,
+                    ),
+                    unselectedIconTheme: IconThemeData(
+                        color: widget.color ??
+                            Theme.of(context).colorScheme.secondary),
                   ),
-                  unselectedIconTheme: IconThemeData(color: widget.color ?? Theme.of(context).colorScheme.secondary),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: widget.items[_selectedIndex]["widget"],
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: widget.items[_selectedIndex]["widget"],
+                    ),
                   ),
-                ),
-              ],
-            ) : widget.items[_selectedIndex]["widget"],
+                ],
+              )
+            : widget.items[_selectedIndex]["widget"],
       ),
       bottomNavigationBar: sidebar
           ? null
@@ -132,7 +137,8 @@ class _QuickNavBarState extends State<QuickNavBar> {
                 }).toList(),
                 selectedItemColor: widget.selectedColor ??
                     Theme.of(context).colorScheme.secondary,
-                unselectedItemColor: widget.color,
+                unselectedItemColor:
+                    widget.color ?? Theme.of(context).colorScheme.secondary,
                 type: BottomNavigationBarType.fixed,
                 selectedLabelStyle: TextStyle(
                     fontSize: _getBottomNavBarType() == QuickNavBarType.static

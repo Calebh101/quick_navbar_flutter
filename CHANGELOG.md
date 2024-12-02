@@ -63,3 +63,9 @@
 - Now new parameter: sidebarBeta: set to true to use the sidebar (which can be true, false, or auto); default is false
 - Known issue: sidebar mode does not respect chosen QuickNavBarType and hoverEffect
 - Improved documentation
+
+### 1.1.2 - 12/1/24
+
+- sidebar icons are now showing the correct color, and bottom navbar icons have been updated to future-proof the issue
+- Example now has dark mode
+- Known issue: sidebar mode does not respect chosen QuickNavBarType and hoverEffect
