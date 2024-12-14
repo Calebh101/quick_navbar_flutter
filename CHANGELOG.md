@@ -69,3 +69,8 @@
 - sidebar icons are now showing the correct color, and bottom navbar icons have been updated to future-proof the issue
 - Example now has dark mode
 - Known issue: sidebar mode does not respect chosen QuickNavBarType and hoverEffect
+
+### 1.1.3 - 12/14/24
+
+- New feature for items: onPressed
+- Some other bug fixes and minor changes

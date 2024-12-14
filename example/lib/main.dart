@@ -27,20 +27,29 @@ class MyApp extends StatelessWidget {
           "label": "Home",
           "icon": Icons.home_outlined,
           "selectedIcon": Icons.home,
-          "widget": HomePage(),
+          "widget": const HomePage(),
+          "onPressed": () {
+            debugPrint("Page 1");
+          }
         },
         {
           "label": "Search",
           "icon": Icons.search,
-          "widget": SearchPage(),
+          "widget": const SearchPage(),
+          "onPressed": () {
+            debugPrint("Page 2");
+          }
         },
         {
           "label": "Settings",
           "icon": Icons.settings_outlined,
           "selectedIcon": Icons.settings,
-          "widget": SettingsPage(),
+          "widget": const SettingsPage(),
+          "onPressed": () {
+            debugPrint("Page 3");
+          }
         },
-      ], sidebarBeta: true),
+      ], selectedColor: Colors.blue, sidebarBeta: true),
     );
   }
 }
@@ -55,7 +64,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Text("Home page");
+    return const Text("Home page");
   }
 }
 
@@ -69,7 +78,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return Text("Search page");
+    return const Text("Search page");
   }
 }
 
@@ -83,6 +92,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Text("Settings page");
+    return const Text("Settings page");
   }
 }

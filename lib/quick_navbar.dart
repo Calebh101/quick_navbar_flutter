@@ -40,6 +40,9 @@ class _QuickNavBarState extends State<QuickNavBar> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
+    if (widget.items[index].containsKey("onPressed")) {
+      widget.items[index]["onPressed"]();
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -78,7 +81,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
                         label: tab.containsKey("label") ||
                                 widget.showLabels == false
                             ? Text(tab['label'] ?? "")
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                       );
                     }).toList(),
                     selectedIconTheme: IconThemeData(

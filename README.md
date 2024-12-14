@@ -55,6 +55,12 @@ QuickNavBar(
 - **Type**: Material Widget
 - **Description**: Set this to the page corresponding to the navigation item you are setting. This is set as the body when the navbar item is pressed. This does not support custom actions, but could in a future update.
 
+#### onPressed
+- **Required**: no
+- **Type**: Function
+- **Default**: nothing
+- **Description**: Set this to a Function object to be executed when the tab is navigated to. This can be used to refresh content, check for updates on something, and much more.
+
 ### showLabels
 - **Required**: no
 - **Type**: boolean
