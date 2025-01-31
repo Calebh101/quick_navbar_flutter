@@ -74,3 +74,11 @@
 
 - New feature for items: onPressed
 - Some other bug fixes and minor changes
+
+### 1.2.0 - 1/30/25
+
+Been a while since I published an update, huh? Thought I forgot about this package?
+WARNING: This update does introduce breaking changes. Please understand these changes before the update.
+
+- BREAKING: Instead of using JSON for the Navbar items, it uses QuickNavBarType. It has the same parameters as the previous JSON implementation.
+- Deprecated sidebarBeta, as it is now ready for final release

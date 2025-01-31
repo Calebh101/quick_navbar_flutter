@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// the actual widget that loads the navbar and inputted pages
 class QuickNavBar extends StatefulWidget {
-  final List items;
+  final List<QuickNavBarItem> items;
   final Color? color;
   final Color? selectedColor;
   final QuickNavBarType? type;
@@ -27,9 +27,9 @@ class QuickNavBar extends StatefulWidget {
     this.color,
     this.selectedColor,
     this.hoverEffect = false,
-
-    //@Deprecated("sidebar mode has exited beta, so sidebarBeta is no longer necessary to use sidebar mode.")
-    this.sidebarBeta = false,
+    @Deprecated(
+        "sidebar mode has exited beta, so sidebarBeta is no longer necessary to use sidebar mode.")
+    this.sidebarBeta = true,
   });
 
   @override
@@ -40,8 +40,8 @@ class _QuickNavBarState extends State<QuickNavBar> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    if (widget.items[index].containsKey("onPressed")) {
-      widget.items[index]["onPressed"]();
+    if (widget.items[index].onPressed != null) {
+      widget.items[index].onPressed!();
     }
     setState(() {
       _selectedIndex = index;
@@ -49,7 +49,7 @@ class _QuickNavBarState extends State<QuickNavBar> {
   }
 
   bool allowSidebar() {
-    bool disableAutoSidebar = !widget.sidebarBeta && widget.sidebar != true;
+    bool disableAutoSidebar = widget.sidebar == false;
     return widget.sidebar ??
         (disableAutoSidebar
             ? false
@@ -74,13 +74,10 @@ class _QuickNavBarState extends State<QuickNavBar> {
                         : NavigationRailLabelType.none,
                     destinations: widget.items.map((tab) {
                       return NavigationRailDestination(
-                        icon: Icon(tab['icon']),
-                        selectedIcon: Icon(tab.containsKey('selectedIcon')
-                            ? tab["selectedIcon"]
-                            : tab["icon"]),
-                        label: tab.containsKey("label") ||
-                                widget.showLabels == false
-                            ? Text(tab['label'] ?? "")
+                        icon: Icon(tab.icon),
+                        selectedIcon: Icon(tab.selectedIcon ?? tab.icon),
+                        label: tab.label != null || widget.showLabels == false
+                            ? Text(tab.label ?? "")
                             : const SizedBox.shrink(),
                       );
                     }).toList(),
@@ -95,12 +92,12 @@ class _QuickNavBarState extends State<QuickNavBar> {
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
-                      child: widget.items[_selectedIndex]["widget"],
+                      child: widget.items[_selectedIndex].widget,
                     ),
                   ),
                 ],
               )
-            : widget.items[_selectedIndex]["widget"],
+            : widget.items[_selectedIndex].widget,
       ),
       bottomNavigationBar: sidebar
           ? null
@@ -122,19 +119,15 @@ class _QuickNavBarState extends State<QuickNavBar> {
                 currentIndex: _selectedIndex,
                 onTap: _onItemTapped,
                 items: widget.items.map((tab) {
-                  return tab.containsKey("label") || widget.showLabels == false
+                  return tab.label != null || widget.showLabels == false
                       ? BottomNavigationBarItem(
-                          icon: Icon(tab['icon']),
-                          activeIcon: Icon(tab.containsKey('selectedIcon')
-                              ? tab["selectedIcon"]
-                              : tab["icon"]),
-                          label: tab['label'],
+                          icon: Icon(tab.icon),
+                          activeIcon: Icon(tab.selectedIcon ?? tab.icon),
+                          label: tab.label,
                         )
                       : BottomNavigationBarItem(
-                          icon: Icon(tab['icon']),
-                          activeIcon: Icon(tab.containsKey('selectedIcon')
-                              ? tab["selectedIcon"]
-                              : tab["icon"]),
+                          icon: Icon(tab.icon),
+                          activeIcon: Icon(tab.selectedIcon ?? tab.icon),
                           label: null,
                         );
                 }).toList(),
@@ -172,18 +165,22 @@ class _QuickNavBarState extends State<QuickNavBar> {
   }
 }
 
+/// represents the type of navbar animation
 enum QuickNavBarType { animate, static, auto }
 
-/// represents the type of navbar animation
-class QuickNavbarType {
-  final QuickNavBarType type;
+/// the navbar items
+class QuickNavBarItem {
+  String? label;
+  IconData icon;
+  IconData? selectedIcon;
+  Widget widget;
+  Function? onPressed;
 
-  /// animates the navbar with material design
-  QuickNavbarType.animate() : type = QuickNavBarType.animate;
-
-  /// doesn't animate the navbar with material design
-  QuickNavbarType.static() : type = QuickNavBarType.static;
-
-  /// decides to animate or not animate the navbar with material design by platform
-  QuickNavbarType.auto() : type = QuickNavBarType.auto;
+  QuickNavBarItem({
+    required this.label,
+    required this.icon,
+    this.selectedIcon,
+    required this.widget,
+    this.onPressed,
+  });
 }

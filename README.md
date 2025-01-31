@@ -11,12 +11,12 @@ quick_navbar is a quick, easy-to-use package to allow you to create simple but s
 ```dart
 QuickNavBar(
     items: [
-        {
-            "label": String, // optional
-            "icon": Icon, // required
-            "selectedIcon": Icon, // optional
-            "widget": Widget, // required
-        },
+        QuickNavBarItem(
+            label: String, // optional
+            icon: IconData, // required
+            selectedIcon: IconData, // optional
+            widget: Widget, // required
+        ),
     ],
     showLabels: bool,
     type: QuickNavBarType,

@@ -23,33 +23,31 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       home: QuickNavBar(items: [
-        {
-          "label": "Home",
-          "icon": Icons.home_outlined,
-          "selectedIcon": Icons.home,
-          "widget": const HomePage(),
-          "onPressed": () {
-            debugPrint("Page 1");
-          }
-        },
-        {
-          "label": "Search",
-          "icon": Icons.search,
-          "widget": const SearchPage(),
-          "onPressed": () {
-            debugPrint("Page 2");
-          }
-        },
-        {
-          "label": "Settings",
-          "icon": Icons.settings_outlined,
-          "selectedIcon": Icons.settings,
-          "widget": const SettingsPage(),
-          "onPressed": () {
-            debugPrint("Page 3");
-          }
-        },
-      ], selectedColor: Colors.blue, sidebarBeta: true),
+        QuickNavBarItem(
+            label: "Home",
+            icon: Icons.home_outlined,
+            selectedIcon: Icons.home,
+            widget: const HomePage(),
+            onPressed: () {
+              debugPrint("Page 1: Home navigated to");
+            }),
+        QuickNavBarItem(
+            label: "Search",
+            icon: Icons.search_outlined,
+            selectedIcon: Icons.search,
+            widget: const SearchPage(),
+            onPressed: () {
+              debugPrint("Page 2: Search navigated to");
+            }),
+        QuickNavBarItem(
+            label: "Settings",
+            icon: Icons.settings_outlined,
+            selectedIcon: Icons.settings,
+            widget: const SettingsPage(),
+            onPressed: () {
+              debugPrint("Page 3: Settings navigated to");
+            }),
+      ], selectedColor: Colors.blue),
     );
   }
 }
