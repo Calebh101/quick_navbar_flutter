@@ -82,3 +82,7 @@ WARNING: This update does introduce breaking changes. Please understand these ch
 
 - BREAKING: Instead of using JSON for the Navbar items, it uses QuickNavBarType. It has the same parameters as the previous JSON implementation.
 - Deprecated sidebarBeta, as it is now ready for final release
+
+### 1.2.1 - 2/28/25
+
+- Updated documentation

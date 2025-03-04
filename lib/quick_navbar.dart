@@ -5,17 +5,35 @@ import 'package:flutter/material.dart';
 
 /// the actual widget that loads the navbar and inputted pages
 class QuickNavBar extends StatefulWidget {
+  /// The items that show up in the NavBar
   final List<QuickNavBarItem> items;
-  final Color? color;
-  final Color? selectedColor;
-  final QuickNavBarType? type;
-  final double fontSize;
-  final double? selectedFontSize;
-  final bool hoverEffect;
-  final bool showLabels;
-  final bool? sidebar;
-  final bool sidebarBeta;
 
+  /// The color of the nav items
+  final Color? color;
+
+  /// The color of the nav items when selected
+  /// Default: [color]
+  final Color? selectedColor;
+
+  /// The style of navbar (static, animate, or dynamic)
+  final QuickNavBarType? type;
+
+  /// The font size of the labels
+  final double fontSize;
+
+  /// The font size of the labels when selected (defaults to [fontSize] on Apple devices, and [fontSize] * 1.25 on anything else)
+  final double? selectedFontSize;
+
+  /// Show a hover effect on the nav items
+  final bool hoverEffect;
+  
+  /// Show the labels of items
+  final bool showLabels;
+
+  /// Enable sidebar
+  final bool? sidebar;
+
+  /// Only the items field is required
   const QuickNavBar({
     super.key,
     required this.items,
@@ -27,9 +45,6 @@ class QuickNavBar extends StatefulWidget {
     this.color,
     this.selectedColor,
     this.hoverEffect = false,
-    @Deprecated(
-        "sidebar mode has exited beta, so sidebarBeta is no longer necessary to use sidebar mode.")
-    this.sidebarBeta = true,
   });
 
   @override
@@ -166,21 +181,43 @@ class _QuickNavBarState extends State<QuickNavBar> {
 }
 
 /// represents the type of navbar animation
-enum QuickNavBarType { animate, static, auto }
+enum QuickNavBarType {
+  /// Material-like
+  animate,
+
+  /// iOS-like
+  static,
+
+  /// Based on platform
+  auto,
+}
 
 /// the navbar items
 class QuickNavBarItem {
+  /// Label of the item
   String? label;
+
+  /// Icon of the item
   IconData icon;
+
+  /// Icon of the item when selected (defaults to [icon])
   IconData? selectedIcon;
-  Widget widget;
+  /// Widget to navigate to on select
+  Widget? widget;
+
+  /// Action when item is activated
   Function? onPressed;
 
+  /// [label] and [icon] are required
   QuickNavBarItem({
     required this.label,
     required this.icon,
     this.selectedIcon,
-    required this.widget,
+    this.widget,
     this.onPressed,
-  });
+  }) {
+    if (onPressed == null && widget == null) {
+      throw Exception("One of these is required: widget or onPressed.");
+    }
+  }
 }
